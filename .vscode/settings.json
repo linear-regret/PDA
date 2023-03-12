@@ -1,0 +1,33 @@
+{
+  "files.associations": {
+    "stdlib.h": "c",
+    "*.tcc": "cpp",
+    "cctype": "cpp",
+    "clocale": "cpp",
+    "cmath": "cpp",
+    "compare": "cpp",
+    "complex": "cpp",
+    "concepts": "cpp",
+    "cstdint": "cpp",
+    "cstdio": "cpp",
+    "cstdlib": "cpp",
+    "cwchar": "cpp",
+    "cwctype": "cpp",
+    "exception": "cpp",
+    "initializer_list": "cpp",
+    "iosfwd": "cpp",
+    "istream": "cpp",
+    "limits": "cpp",
+    "new": "cpp",
+    "numbers": "cpp",
+    "ostream": "cpp",
+    "sstream": "cpp",
+    "stdexcept": "cpp",
+    "streambuf": "cpp",
+    "string": "cpp",
+    "string_view": "cpp",
+    "system_error": "cpp",
+    "type_traits": "cpp",
+    "typeinfo": "cpp"
+  }
+}
