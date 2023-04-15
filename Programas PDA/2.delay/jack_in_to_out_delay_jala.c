@@ -9,8 +9,10 @@
 
 #include <jack/jack.h>
 
-jack_port_t *input_port;
-jack_port_t *output_port;
+jack_port_t *input_port1;
+jack_port_t *input_port2;
+jack_port_t *output_port1;
+jack_port_t *output_port2;
 jack_client_t *client;
 double *buffer;
 int buffer_size;
@@ -19,22 +21,25 @@ int buffer_i;
 
 int jack_callback(jack_nframes_t nframes, void *arg)
 {
-  jack_default_audio_sample_t *in, *out;
+  jack_default_audio_sample_t *in1, *in2, *out1, *out2;
 
-  in = jack_port_get_buffer(input_port, nframes);
-  out = jack_port_get_buffer(output_port, nframes);
-  int i;
+  in1 = jack_port_get_buffer(input_port1, nframes);
+  in2 = jack_port_get_buffer(input_port2, nframes);
+  out1 = jack_port_get_buffer(output_port1, nframes);
+  out2 = jack_port_get_buffer(output_port2, nframes);
 
-  for (i = 0; i < nframes; ++i)
+  for (int i = 0; i < nframes; ++i)
   {
     // * Lee del buffer, al principio vacío
-    out[i] = buffer[buffer_i];
+    out1[i] = buffer[buffer_i];
     // Escribe en buffer lo que se leerá tiempo después
-    buffer[buffer_i] = in[i];
+    buffer[buffer_i] = in1[i];
     // Incrementa índice del buffer
     buffer_i++;
     //  Da la vueta al buffer
     buffer_i %= buffer_size;
+
+    out2[i] = in2[i];
   }
   return 0;
 }
@@ -48,7 +53,7 @@ int main(int argc, char *argv[])
 {
   float seconds = atof(argv[1]);
 
-  const char *client_name = "agente_smith";
+  const char *client_name = "smith";
   jack_options_t options = JackNoStartServer;
   jack_status_t status;
 
@@ -86,13 +91,15 @@ int main(int argc, char *argv[])
   printf("Engine window size: %d\n", jack_get_buffer_size(client));
 
   /* create the agent input port */
-  input_port = jack_port_register(client, "input", JACK_DEFAULT_AUDIO_TYPE, JackPortIsInput, 0);
+  input_port1 = jack_port_register(client, "input1", JACK_DEFAULT_AUDIO_TYPE, JackPortIsInput, 0);
+  input_port2 = jack_port_register(client, "input2", JACK_DEFAULT_AUDIO_TYPE, JackPortIsInput, 0);
 
   /* create the agent output port */
-  output_port = jack_port_register(client, "output", JACK_DEFAULT_AUDIO_TYPE, JackPortIsOutput, 0);
+  output_port1 = jack_port_register(client, "output1", JACK_DEFAULT_AUDIO_TYPE, JackPortIsOutput, 0);
+  output_port2 = jack_port_register(client, "output2", JACK_DEFAULT_AUDIO_TYPE, JackPortIsOutput, 0);
 
   /* check that both ports were created succesfully */
-  if ((input_port == NULL) || (output_port == NULL))
+  if ((input_port1 == NULL) || (input_port2 == NULL) || (output_port1 == NULL) || (output_port2 == NULL))
   {
     printf("Could not create agent ports. Have we reached the maximum amount of JACK agent ports?\n");
     exit(1);
@@ -122,6 +129,7 @@ int main(int argc, char *argv[])
   /* Assign our input port to a server output port*/
   // Find possible output server port names
   const char **serverports_names;
+  // serverports_names = jack_get_ports(client, NULL, NULL, JackPortIsPhysical | JackPortIsOutput);
   serverports_names = jack_get_ports(client, NULL, NULL, JackPortIsPhysical | JackPortIsOutput);
   if (serverports_names == NULL)
   {
@@ -129,7 +137,7 @@ int main(int argc, char *argv[])
     exit(1);
   }
   // Connect the first available to our input port
-  if (jack_connect(client, serverports_names[0], jack_port_name(input_port)))
+  if (jack_connect(client, serverports_names[0], jack_port_name(input_port1)))
   {
     printf("Cannot connect input port.\n");
     exit(1);
@@ -146,16 +154,16 @@ int main(int argc, char *argv[])
     exit(1);
   }
   // Connect the first available to our output port
-  if (jack_connect(client, jack_port_name(output_port), serverports_names[0]))
+  if (jack_connect(client, jack_port_name(output_port1), serverports_names[0]))
   {
     printf("Cannot connect output ports.\n");
     exit(1);
   }
-  // if (jack_connect(client, jack_port_name(output_port), "baudline:in_1"))
-  // {
-  //   printf("Cannot connect output ports.\n");
-  //   exit(1);
-  // }
+  if (jack_connect(client, jack_port_name(output_port2), "baudline:in_2"))
+  {
+    printf("Cannot connect output ports.\n");
+    exit(1);
+  }
   // free serverports_names variable, we're not going to use it again
   free(serverports_names);
 
