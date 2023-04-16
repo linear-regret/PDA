@@ -41,6 +41,7 @@ x_c = x - mean(x);
 y_c = y - mean(y);
 
 %fft'ing input signals
+%fft'ing input signals
 x_f = fft(x_c);
 y_f = fft(y_c);
 
@@ -49,10 +50,10 @@ ccv_f = x_f.*conj(y_f);
 ccv = real(ifft(ccv_f))/(norm(x_c)*norm(y_c));
 ccv = fftshift(ccv);
 mid = (size(ccv,2)/2)+1;
-figure(2); plot(-max_delay:max_delay,ccv(mid-max_delay:mid+max_delay)); axis([-max_delay max_delay -0.2 1]); title('Correlacion Cruzada - Pearson') 
+figure(2); plot(-max_delay:max_delay,ccv(mid-max_delay:mid+max_delay)); axis([-max_delay max_delay -0.2 1]); title('Correlacion Cruzada - Pearson')
 
 %cross-correlation via GCC-PHAT
-ccv_fp = x_f.*conj(y_f)./abs(x_f.*conj(y_f));
+ccv_fp = x_f.*conj(y_f)./abs(x_f.*conj(y_f)); % El denominador es un vector de normas
 ccvp = real(ifft(ccv_fp));
 ccvp = fftshift(ccvp);
 mid = (size(ccvp,2)/2)+1;
