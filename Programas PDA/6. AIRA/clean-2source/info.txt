@@ -1,2 +1,2 @@
-0.18
--30, 90
+0.18 separación entre micrófonos en metros
+-30, 90 ángulo de las fuentes medido como dice en el pdf
