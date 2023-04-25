@@ -1,4 +1,5 @@
-%
+% Se hace una señal completa que se puede dividir en ventanas para ver cómo se podría hacer un promedio o algo por el estilo de los delays
+## Se puede poner con todos los parámetros del modelo real
 
 max_delay = 15;                 %maximum delay possible in samples
 
@@ -17,23 +18,24 @@ K = 100;                        %signal size in samples
 t = 1:K;                        %time vector
 
 %original signals
-s1 = e.^(-pi*((t).^2)/10)+3;
+%s1 = e.^(-pi*((t+1).^2)/10)+3;
+s1=cos(10*2*pi*t/K);
+s2=cos(3*2*pi*(t-20)/K);
 
-s2 = 0.75*e.^(-pi*((t-20).^2)/K);
 
 
 
 %microphones (input signals)
 x = [zeros(1,delay_x1) s1(1:end-delay_x1)] + [zeros(1,delay_x2) s2(1:end-delay_x2)];
 y = [zeros(1,delay_y1) s1(1:end-delay_y1)] + [zeros(1,delay_y2) s2(1:end-delay_y2)];
-
-####adding reverberation
+##
+######adding reverberation
 ##x = add_reverb(x,reverb_w);
 ##y = add_reverb(y,reverb_w);
-
-####adding noise
-x = x + randn(1,K)*noise_w/10;
-y = y + randn(1,K)*noise_w/10;
+##
+######adding noise
+##x = x + randn(1,K)*noise_w/10;
+##y = y + randn(1,K)*noise_w/10;
 
 figure(1); plot(t,x,t,y); title('Senales de entrada')
 
@@ -49,10 +51,10 @@ x_c = x - mean(x);
 y_c = y - mean(y);
 
 ## Aplicar WOLA a la señal de entrada antes de hacerle la transformada
-wola=sqrt(1-cos(2*pi*t/K));
-x_c=wola.*x_c;
-y_c=wola.*y_c;
-figure(4); plot(t,x_c,t,y_c);axis([0,K]); title('WOLA xy');
+##wola=sqrt(1-cos(2*pi*t/K));
+##x_c=wola.*x_c;
+##y_c=wola.*y_c;
+##figure(4); plot(t,x_c,t,y_c);axis([0,K]); title('WOLA xy');
 
 
 %fft'ing input signals
