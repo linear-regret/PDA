@@ -4,10 +4,10 @@ doas = [-30 40];    %directional of arrival of both signals in degrees
 
 d = 20;             %distance between microphones in meters
 
-noise_w = 0.5;      %noise presence (between 0 and 1)
+noise_w = 0;      %noise presence (between 0 and 1)
 
 K = 200;        %signal size in samples, also frequency sampling
-w = [0:(K/2), -(K/2)+1:-1]; 
+w = [0:(K/2), -(K/2)+1:-1];
                 %frequency vector
 %%%%%%%%
 
