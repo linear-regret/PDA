@@ -1,0 +1,15 @@
+Mínimo entregable: 
+    ✔ Ver que se puede hacer en menos del tiempo requerido para la nueva ventana @done(23-05-27 22:54)
+    ☐ Hacer estimación de la matriz de correlación y ver que se puede hacer en menor tiempo 
+        ☐ Al menos lo de SVG para descomponer en eigenvalores puede funcionar
+    ☐ Algún tipo de estimación del ángulo con información anterior. Tal vez inferencia usando GP o algo parecido
+    ☐ Tenerlo listo con varios archivos de AIRA
+
+Extras potables:
+    ☐ Hacer el cálculo de los ángulos con ccv y phat.
+    ☐ Comparar cálculos para ir estando más seguros del ángulo correcto.
+    ☐ Comparar intensidad obtenida en python e intensidad obtenida en C escribiendo un archivo.
+
+
+Cosas extra: 
+    ☐ 
