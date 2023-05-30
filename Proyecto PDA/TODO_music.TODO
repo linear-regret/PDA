@@ -1,21 +1,23 @@
 Mínimo entregable: 
     ✔ Ver que se puede hacer en menos del tiempo requerido para la nueva ventana @done(23-05-27 22:54)
     ✔ Hacer filtrado de frecuencias @done(23-05-29 21:45)
-        ☐ Ver manera de hacer un mejor filtrado, tal vez con frecuencias de voces de hombres y mujeres
     ✔ Hacer cálculos de los máximos en cada ventana y con un archivo completo de audio @done(23-05-29 21:45)
-    ☐ Hacer estimación de la matriz de correlación y ver que se puede hacer en menor tiempo 
-        ☐ Al menos lo de SVG para descomponer en eigenvalores puede funcionar
-    ☐ Algún tipo de estimación del ángulo con información anterior. Tal vez inferencia usando GP o algo parecido. Bootstrap
+    ✔ Poner todo en una clase a la que se le puedan mover las partes; la función de maximización, la forma de diagonalizar, etc. Así si llega una mejor librería que haga fft se enchufa y ya. @done(23-05-29 22:51)
+    ☐ Hacer estimación de ángulo usando bootstrap del promedio, junto con intervalos de confianza. 
+    ☐ Hacer Gaussian Process
+    ☐ Ver algún algoritmo de peak detection como decía ChatGPT god. También ver lo de clustering para máximosh 
+    ☐ Ver manera de hacer un mejor filtrado, tal vez con frecuencias de voces de hombres y mujeres
     ☐ Tenerlo listo con varios archivos de AIRA
-    ☐ Usar pyjack
     ☐ Incluir hann a ver qué pasa con los cálculos. Esto se puede poner nada más como una función de preprocesamiento en el texto similar a lo de la matriz de correlación
-    ☐ Poner todo en una clase a la que se le puedan mover las partes; la función de maximización, la forma de diagonalizar, etc. Así si llega una mejor librería que haga fft se enchufa y ya. 
-    ☐ Ver algún algoritmo de peak detection como decía ChatGPT god. También ver lo de 
+    ☐ Usar pyjack
 
+    
 Extras potables:
     ☐ Hacer el cálculo de los ángulos con ccv y phat. Si se pudieran hacer varios se podría armar una función como de aptitud. 
     ☐ Comparar cálculos para ir estando más seguros del ángulo correcto.
     ☐ Comparar intensidad obtenida en python e intensidad obtenida en C escribiendo un archivo.
+    ☐ Hacer estimación de la matriz de correlación y ver que se puede hacer en menor tiempo 
+        ☐ Al menos lo de SVG para descomponer en eigenvalores puede funcionar
 
 
 Preguntas a contestar: 
@@ -28,3 +30,5 @@ La función del GP podría tener como función objetivo la intensidad en ese pun
 En la interfaz debería ser tal que regrese un conjunto de ángulos y su score y ya después basado en eso se va prediciendo con GP
 
 Se debería tener un criterio para en algún momento estar seguro de dónde está el máximo de la función 
+
+De algún modo se tiene que ir tomando en cuenta la intensidad del espectro de music en el ángulo a tratar, tal vez se puede llevar una cuenta del ángulo máximo y con este . 
